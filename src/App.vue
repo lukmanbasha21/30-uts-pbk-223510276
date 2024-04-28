@@ -61,13 +61,13 @@ export default {
 
 <style>
 body {
-  background-image: url("./src/assets/bg.jpeg");
+  background-image: url("./assets/bg.jpeg");
 }
 .container {
   margin: 0 auto;
   padding: 25px;
   font-family: Arial, sans-serif;
-  background-image: url("./src/assets/bg1.jpeg");
+  background-image: url("./assets/bg1.jpeg");
   border-radius: 10px;
   width: 500px 400px;
 }
