@@ -7,6 +7,15 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.container {
+  margin: 0 auto;
+  padding: 45px;
+  font-family: Arial, sans-serif;
+  background-image: url("./src/assets/bg1.jpeg");
+  background-size: cover;
+  border-radius: 10px;
+  width: 500px 400px;
+}
 body {
   background-image: url(./assets/bg.jpeg);
   background-repeat: no-repeat;
@@ -17,73 +26,6 @@ h1 {
   color: #333;
   margin-bottom: 20px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 input[type="text"] {
   width: calc(100% - 80px);
