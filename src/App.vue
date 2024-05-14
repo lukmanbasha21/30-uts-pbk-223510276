@@ -131,12 +131,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-image: url("./src/assets/bg.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 .container {
   margin: 0 auto;
   padding: 45px;
