@@ -131,16 +131,6 @@ export default {
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  padding: 45px;
-  font-family: Arial, sans-serif;
-  background-image: url("./src/assets/bg1.jpeg");
-  background-size: cover;
-  border-radius: 10px;
-  width: 500px 400px;
-}
-
 .completed {
   text-decoration: line-through;
 }
