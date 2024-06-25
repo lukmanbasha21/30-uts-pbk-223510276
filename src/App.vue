@@ -1,154 +1,78 @@
 <template>
-  <div>
-    <header class="navbar">
-      <nav>
-        <ul>
-          <li @click="showTodos">Todos</li>
-          <li @click="showPosts">Post</li>
-        </ul>
-      </nav>
-    </header>
-    <div class="container">
-      <h1 v-if="activeTab === 'todos'">CLUB BOLA</h1>
-      <h1 v-else-if="activeTab === 'posts'">Postingan User</h1>
-      <div v-if="activeTab === 'todos'">
-        <input
-          type="text"
-          v-model="newTodo"
-          @keyup.enter="addTodo"
-          placeholder="Masukkan Nama Club"
-        />
-        <ul>
-          <li v-for="(todo, index) in filteredTodos" :key="index">
-            <input type="checkbox" v-model="todo.completed" />
-            <span :class="{ completed: todo.completed }">{{ todo.text }}</span>
-            <button @click="removeTodo(index)">Hapus</button>
-          </li>
-        </ul>
-        <p v-if="remainingCount === 0">Ayo Bertanding.</p>
-        <p v-else>{{ remainingCount }} task(s) remaining</p>
-        <button @click="toggleFilter">{{ filterButtonText }}</button>
-      </div>
-      <div v-else-if="activeTab === 'posts'">
-        <select v-model="selectedUser">
-          <option v-for="user in users" :key="user.id" :value="user.id">
-            {{ user.name }}
-          </option>
-        </select>
-        <div v-if="posts.length">
-          <div v-for="post in filteredPosts" :key="post.id">
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.body }}</p>
+  <div id="app">
+    <q-layout view="hHh lpR fFf">
+      <q-header class="bg-grey text-white" elevated height="100px">
+        <q-toolbar class="toolbar-custom">
+          <q-toolbar-title class="header-title">
+            My App
+          </q-toolbar-title>
+          <div class="tabs-container">
+            <q-tabs
+              class="text-white"
+              align="right"
+              dense
+              active-color="white"
+            >
+              <q-route-tab to="/" label="Todos" />
+              <q-route-tab to="/post" label="Post" />
+              <q-route-tab to="/album" label="Album" />
+            </q-tabs>
           </div>
+        </q-toolbar>
+      </q-header>
+
+      <q-page-container>
+        <router-view />
+      </q-page-container>
+
+      <q-footer class="bg-grey text-white" height="60px">
+        <div class="text-center footer-text">
+          © 2024 My App
         </div>
-        <p v-else>Loading...</p>
-      </div>
-    </div>
+      </q-footer>
+    </q-layout>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      newTodo: "",
-      todos: [],
-      showCompleted: false,
-      activeTab: "todos",
-      users: [],
-      posts: [],
-      selectedUser: null,
-    };
-  },
-  computed: {
-    filteredTodos() {
-      return this.showCompleted
-        ? this.todos
-        : this.todos.filter((todo) => !todo.completed);
-    },
-    remainingCount() {
-      return this.todos.filter((todo) => !todo.completed).length;
-    },
-    filterButtonText() {
-      return this.showCompleted ? "Show Uncompleted" : "Show All";
-    },
-    filteredPosts() {
-      return this.posts.filter(
-        (post) => post.userId === parseInt(this.selectedUser)
-      );
-    },
-  },
-  methods: {
-    addTodo() {
-      if (this.newTodo.trim() !== "") {
-        this.todos.push({ text: this.newTodo, completed: false });
-        this.newTodo = "";
-      }
-    },
-    removeTodo(index) {
-      this.todos.splice(index, 1);
-    },
-    toggleFilter() {
-      this.showCompleted = !this.showCompleted;
-    },
-    async fetchUsers() {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        this.users = await response.json();
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    },
-    async fetchPosts() {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/posts"
-        );
-        this.posts = await response.json();
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    },
-    async showPosts() {
-      this.activeTab = "posts";
-      if (!this.users.length) {
-        await this.fetchUsers();
-      }
-      if (!this.posts.length) {
-        await this.fetchPosts();
-      }
-    },
-    showTodos() {
-      this.activeTab = "todos";
-    },
-  },
-  mounted() {
-    this.fetchUsers();
-  },
+  name: "App"
 };
 </script>
 
 <style>
-.completed {
-  text-decoration: line-through;
+#app {
+  font-family: 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.navbar {
-  background-color: rgb(26, 21, 86);
-  overflow: hidden;
-  display: flex; /* Tambahkan */
-  justify-content: center; /* Tambahkan */
+.q-header {
+  text-align: left; /* Align header content to the left */
 }
 
-.navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.q-footer {
+  padding: 10px 0;
 }
 
-.navbar ul li {
-  float: left;
+.header-title {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 24px; /* Adjust the font size for the header title */
+}
+
+.footer-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px; /* Adjust the font size for the footer text */
+}
+
+.toolbar-custom {
+  justify-content: space-between; /* Space between title and tabs */
+}
+
+.tabs-container {
+  margin-top: 10px; /* Adjust the margin to move the tabs down */
+  margin-right: 20px; /* Adjust right margin if needed */
 }
 </style>
